@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace krusing_down_the_asile_backend.Models
+{
+   public partial class Person
+   {
+      public Person()
+      {
+
+      }
+
+      public int Id { get; set; }
+      public string FirstName { get; set; }
+      public string LastName { get; set; }
+      public int FoodId { get; set; }
+      public int PlusOneId { get; set; }
+      public bool HasAllergy { get; set; }
+      public string Allergy { get; set; }
+
+      public virtual Food Food { get; set; }
+      public virtual PlusOne PlusOne { get; set; }
+   }
+}
