@@ -25,21 +25,32 @@ namespace krusing_down_the_asile_backend.Controllers.Controllers
          return _context.Person;
       }
 
+      [HttpGet("FoodDetails")]
+      public IEnumerable<Person> GetPersonsFoodDetials()
+      {
+         return _context.Person.Include(f => f.Food).AsNoTracking();
+      }
+
+      [HttpGet("PlusOneDetails")]
+      public IEnumerable<Person> GetPersonsPlusOneDetials()
+      {
+         return _context.Person.Include(p => p.PlusOne).ThenInclude(f => f.Food).AsNoTracking();
+      }
+
       [HttpGet("{id}")]
       public async Task<IActionResult> GetPerson([FromRoute] int id)
       {
          if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-         var person = await _context.Person.SingleOrDefaultAsync(p => p.Id == id);
-         
+         var person = await _context.Person.Include(f => f.Food).AsNoTracking().SingleOrDefaultAsync(p => p.Id == id);
+
          if (person == null)
          {
             return NotFound();
          }
 
-         if (person.FoodId > 0)
-            person.Food = await _context.Food.SingleOrDefaultAsync(f => f.Id == person.FoodId);
+         
 
          if (person.PlusOneId > 0)
             person.PlusOne = await _context.PlusOne

@@ -20,9 +20,9 @@ namespace krusing_down_the_asile_backend.Controllers.Controllers
       }
 
       [HttpGet("")]
-      public IEnumerable<Person> GetPlusOnes()
+      public IEnumerable<PlusOne> GetPlusOnes()
       {
-         return _context.Person;
+         return _context.PlusOne;
       }
 
       [HttpGet("{id}")]
@@ -31,15 +31,12 @@ namespace krusing_down_the_asile_backend.Controllers.Controllers
          if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-         var plusOne = await _context.PlusOne.SingleOrDefaultAsync(p => p.Id == id);
+         var plusOne = await _context.PlusOne.Include(f => f.Food).AsNoTracking().SingleOrDefaultAsync(p => p.Id == id);
          
          if (plusOne == null)
          {
             return NotFound();
          }
-
-         if (plusOne.FoodId > 0)
-            plusOne.Food = await _context.Food.SingleOrDefaultAsync(f => f.Id == plusOne.FoodId);
 
          return Ok(plusOne);
       }
@@ -81,7 +78,7 @@ namespace krusing_down_the_asile_backend.Controllers.Controllers
          _context.PlusOne.Add(plusOne);
          await _context.SaveChangesAsync();
 
-         return CreatedAtAction("GetPerson", new { id = plusOne.Id }, plusOne);
+         return CreatedAtAction("GetPlusOnes", new { id = plusOne.Id }, plusOne);
       }
 
       private bool PlusOneExists(int id)
