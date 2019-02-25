@@ -61,6 +61,31 @@ namespace krusing_down_the_aisle_backend.Controllers.Controllers
          return Ok(person);
       }
 
+      [HttpGet("Lookup")]
+      public async Task<IActionResult> GetPersonLookup([FromBody] string fullName)
+      {
+         if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+         var names = fullName.Split(" ");
+
+         if (names.Length < 2)
+         {
+            ModelState.AddModelError("Error", "Please enter first name followed by a space and your last name only");
+            return BadRequest(ModelState);
+         }
+
+         var person = await _context.Person.FirstOrDefaultAsync(p => p.FirstName.Equals(names[0]) && p.LastName.Equals(names[1]));
+
+         if (person == null)
+         {
+            ModelState.AddModelError("Error", string.Format("Unable to find RSVP with name {0} {1}", names[0], names[1]));
+            return NotFound(ModelState);
+         }
+
+         return Ok(person);
+      }
+
       [HttpPut("{id}")]
       public async Task<IActionResult> PutPerson([FromRoute] int id, [FromBody] Person person)
       {
