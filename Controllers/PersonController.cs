@@ -61,13 +61,13 @@ namespace krusing_down_the_aisle_backend.Controllers.Controllers
          return Ok(person);
       }
 
-      [HttpGet("Lookup")]
-      public async Task<IActionResult> GetPersonLookup([FromBody] string fullName)
+      [HttpGet("Lookup/")]
+      public async Task<IActionResult> GetPersonLookup([FromQuery] string name)
       {
          if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-         var names = fullName.Split(" ");
+         var names = name.Split(" ");
 
          if (names.Length < 2)
          {
@@ -75,12 +75,12 @@ namespace krusing_down_the_aisle_backend.Controllers.Controllers
             return BadRequest(ModelState);
          }
 
-         var person = await _context.Person.FirstOrDefaultAsync(p => p.FirstName.Equals(names[0]) && p.LastName.Equals(names[1]));
+         var person = await _context.Person.FirstOrDefaultAsync(p => p.FirstName.ToUpper().Equals(names[0].ToUpper()) && p.LastName.ToUpper().Equals(names[1].ToUpper()));
 
          if (person == null)
          {
             ModelState.AddModelError("Error", string.Format("Unable to find RSVP with name {0} {1}", names[0], names[1]));
-            return NotFound(ModelState);
+            return BadRequest(ModelState);
          }
 
          return Ok(person);
