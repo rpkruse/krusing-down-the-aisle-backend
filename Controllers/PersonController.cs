@@ -75,13 +75,19 @@ namespace krusing_down_the_aisle_backend.Controllers.Controllers
             return BadRequest(ModelState);
          }
 
-         var person = await _context.Person.FirstOrDefaultAsync(p => p.FirstName.ToUpper().Equals(names[0].ToUpper()) && p.LastName.ToUpper().Equals(names[1].ToUpper()));
+         var person = await _context.Person.Include(f => f.Food).AsNoTracking().FirstOrDefaultAsync(p => p.FirstName.ToUpper().Equals(names[0].ToUpper()) && p.LastName.ToUpper().Equals(names[1].ToUpper()));
 
          if (person == null)
          {
             ModelState.AddModelError("Error", string.Format("Unable to find RSVP with name {0} {1}", names[0], names[1]));
             return BadRequest(ModelState);
          }
+
+         if (person.PlusOneId > 0)
+            person.PlusOne = await _context.PlusOne
+                                          .Include(f => f.Food)
+                                          .AsNoTracking()
+                                          .SingleOrDefaultAsync(po => po.Id == person.PlusOneId);
 
          return Ok(person);
       }
