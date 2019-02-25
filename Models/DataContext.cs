@@ -11,7 +11,7 @@ namespace krusing_down_the_aisle_backend.Models
       public virtual DbSet<Food> Food { get; set; }
       public virtual DbSet<Person> Person { get; set; }
       public virtual DbSet<PlusOne> PlusOne { get; set; }
-
+      public virtual DbSet<WeddingParty> WeddingParty { get; set; }
       public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
       protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -115,7 +115,49 @@ namespace krusing_down_the_aisle_backend.Models
                .HasColumnType("int(11)")
                .IsRequired();
          });
+         modelBuilder.Entity<WeddingParty>(entity =>
+         {
+            entity.ToTable("wedding_party");
 
+            entity.HasIndex(e => e.Id)
+               .HasName("id")
+               .IsUnique();
+
+            entity.Property(e => e.Id)
+               .HasColumnName("id")
+               .HasColumnType("int(11)")
+               .IsRequired();
+
+            entity.Property(e => e.FirstName)
+               .HasColumnName("first_name")
+               .HasColumnType("varchar(45)")
+               .IsRequired();
+
+            entity.Property(e => e.LastName)
+               .HasColumnName("last_name")
+               .HasColumnType("varchar(45)")
+               .IsRequired();
+
+            entity.Property(e => e.Spot)
+               .HasColumnName("spot")
+               .HasColumnType("varchar(45)")
+               .IsRequired();
+
+            entity.Property(e => e.About)
+               .HasColumnName("about")
+               .HasColumnType("varchar(5000)")
+               .IsRequired();
+
+            entity.Property(e => e.Picture)
+               .HasColumnName("picture")
+               .HasColumnType("varchar(150)")
+               .IsRequired();
+
+            entity.Property(e => e.IsBridal)
+               .HasColumnName("is_bridal")
+               .HasColumnType("tinyint(1)")
+               .IsRequired();
+         });
       }
    }
 }
