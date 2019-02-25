@@ -63,6 +63,11 @@ namespace krusing_down_the_aisle_backend.Models
                .HasColumnType("varchar(50)")
                .IsRequired();
 
+            entity.Property(e => e.HasPlusone)
+               .HasColumnName("has_plus_one")
+               .HasColumnType("tinyint(1)")
+               .IsRequired();
+
             entity.Property(e => e.FoodId)
                .HasColumnName("food_id")
                .HasColumnType("int(11)")
