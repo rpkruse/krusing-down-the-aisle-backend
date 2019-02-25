@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace krusing_down_the_asile_backend
+namespace krusing_down_the_aisle_backend
 {
    public class Program
    {

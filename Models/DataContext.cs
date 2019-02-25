@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace krusing_down_the_asile_backend.Models
+namespace krusing_down_the_aisle_backend.Models
 {
    public partial class DataContext : DbContext
    {

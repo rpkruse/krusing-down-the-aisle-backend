@@ -1,4 +1,4 @@
-﻿using krusing_down_the_asile_backend.Models;
+﻿using krusing_down_the_aisle_backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace krusing_down_the_asile_backend.Controllers.Controllers
+namespace krusing_down_the_aisle_backend.Controllers.Controllers
 {
    [Produces("application/json")]
    [Route("api/Persons")]
