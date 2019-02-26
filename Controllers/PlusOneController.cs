@@ -81,6 +81,23 @@ namespace krusing_down_the_aisle_backend.Controllers.Controllers
          return CreatedAtAction("GetPlusOnes", new { id = plusOne.Id }, plusOne);
       }
 
+      [HttpDelete("{id}")]
+      public async Task<IActionResult> DeletePlusOne([FromRoute] int id)
+      {
+         if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+         PlusOne po = _context.PlusOne.SingleOrDefault(p => p.Id == id);
+
+         if (po == null)
+            return NotFound();
+
+         _context.PlusOne.Remove(po);
+         await _context.SaveChangesAsync();
+
+         return Ok(po);
+      }
+
       private bool PlusOneExists(int id)
       {
          return _context.PlusOne.Any(e => e.Id == id);

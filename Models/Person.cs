@@ -17,7 +17,6 @@ namespace krusing_down_the_aisle_backend.Models
       public string LastName { get; set; }
       public bool HasPlusone { get; set; }
       public int FoodId { get; set; }
-      public int PlusOneId { get; set; }
       public bool HasAllergy { get; set; }
       public string Allergy { get; set; }
 

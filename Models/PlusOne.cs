@@ -16,7 +16,9 @@ namespace krusing_down_the_aisle_backend.Models
       public string FirstName { get; set; }
       public string LastName { get; set; }
       public int FoodId { get; set; }
+      public int PersonId { get; set; }
 
       public virtual Food Food { get; set; }
+      public virtual Person Person { get; set; }
    }
 }

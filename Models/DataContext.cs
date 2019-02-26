@@ -73,10 +73,6 @@ namespace krusing_down_the_aisle_backend.Models
                .HasColumnType("int(11)")
                .IsRequired();
 
-            entity.Property(e => e.PlusOneId)
-               .HasColumnName("plus_one_id")
-               .HasColumnType("int(11)");
-
             entity.Property(e => e.HasAllergy)
                .HasColumnName("has_allergy")
                .HasColumnType("tinyint(1)")
@@ -85,6 +81,10 @@ namespace krusing_down_the_aisle_backend.Models
             entity.Property(e => e.Allergy)
                .HasColumnName("allergy")
                .HasColumnType("varchar(45)");
+
+            entity.HasOne(p => p.PlusOne)
+               .WithOne(p => p.Person)
+               .HasForeignKey<PlusOne>(p => p.PersonId);
          });
 
          modelBuilder.Entity<PlusOne>(entity =>
@@ -112,6 +112,11 @@ namespace krusing_down_the_aisle_backend.Models
 
             entity.Property(e => e.FoodId)
                .HasColumnName("food_id")
+               .HasColumnType("int(11)")
+               .IsRequired();
+
+            entity.Property(e => e.PersonId)
+               .HasColumnName("person_id")
                .HasColumnType("int(11)")
                .IsRequired();
          });
