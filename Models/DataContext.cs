@@ -38,6 +38,11 @@ namespace krusing_down_the_aisle_backend.Models
                .HasColumnName("desc")
                .HasColumnType("varchar(5000)")
                .IsRequired();
+
+            entity.Property(e => e.Img)
+               .HasColumnName("img")
+               .HasColumnType("varchar(150)")
+               .IsRequired();
          });
 
          modelBuilder.Entity<Person>(entity =>
@@ -82,6 +87,11 @@ namespace krusing_down_the_aisle_backend.Models
                .HasColumnName("allergy")
                .HasColumnType("varchar(45)");
 
+            entity.Property(e => e.HasRSVPD)
+               .HasColumnName("hasRSVPD")
+               .HasColumnType("tinyint(1)")
+               .IsRequired();
+
             entity.HasOne(p => p.PlusOne)
                .WithOne(p => p.Person)
                .HasForeignKey<PlusOne>(p => p.PersonId);
@@ -109,6 +119,15 @@ namespace krusing_down_the_aisle_backend.Models
                .HasColumnName("last_name")
                .HasColumnType("varchar(50)")
                .IsRequired();
+
+            entity.Property(e => e.HasAllergy)
+               .HasColumnName("hasAllergy")
+               .HasColumnType("tinyint(1)")
+               .IsRequired();
+
+            entity.Property(e => e.Allergy)
+               .HasColumnName("allergy")
+               .HasColumnType("varchar(50)");
 
             entity.Property(e => e.FoodId)
                .HasColumnName("food_id")

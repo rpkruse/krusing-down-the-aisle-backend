@@ -15,6 +15,6 @@ namespace krusing_down_the_aisle_backend.Models
       public int Id { get; set; }
       public string Name { get; set; }
       public string Desc { get; set; }
-      //TODO: Maybe add a col for sides? Are we going to let people pick their sides?
+      public string Img { get; set; }
    }
 }

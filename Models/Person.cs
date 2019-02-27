@@ -19,6 +19,7 @@ namespace krusing_down_the_aisle_backend.Models
       public int FoodId { get; set; }
       public bool HasAllergy { get; set; }
       public string Allergy { get; set; }
+      public bool HasRSVPD { get; set; }
 
       public virtual Food Food { get; set; }
       public virtual PlusOne PlusOne { get; set; }
