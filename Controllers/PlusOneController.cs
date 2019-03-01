@@ -78,7 +78,7 @@ namespace krusing_down_the_aisle_backend.Controllers.Controllers
          _context.PlusOne.Add(plusOne);
          await _context.SaveChangesAsync();
 
-         return CreatedAtAction("GetPlusOnes", new { id = plusOne.Id }, plusOne);
+         return CreatedAtAction("GetPlusOne", new { id = plusOne.Id }, plusOne);
       }
 
       [HttpDelete("{id}")]

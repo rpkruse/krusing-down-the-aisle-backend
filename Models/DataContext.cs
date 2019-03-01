@@ -10,6 +10,7 @@ namespace krusing_down_the_aisle_backend.Models
    {
       public virtual DbSet<Food> Food { get; set; }
       public virtual DbSet<Person> Person { get; set; }
+      public virtual DbSet<Photo> Photo { get; set; }
       public virtual DbSet<PlusOne> PlusOne { get; set; }
       public virtual DbSet<WeddingParty> WeddingParty { get; set; }
       public DataContext(DbContextOptions<DataContext> options) : base(options) { }
@@ -97,6 +98,29 @@ namespace krusing_down_the_aisle_backend.Models
                .HasForeignKey<PlusOne>(p => p.PersonId);
          });
 
+         modelBuilder.Entity<Photo>(entity =>
+         {
+            entity.ToTable("photo");
+
+            entity.HasIndex(e => e.Id)
+               .HasName("id")
+               .IsUnique();
+
+            entity.Property(e => e.Id)
+               .HasColumnName("id")
+               .HasColumnType("int(11)")
+               .IsRequired();
+
+            entity.Property(e => e.Img)
+               .HasColumnName("img")
+               .HasColumnType("varchar(250)")
+               .IsRequired();
+
+            entity.Property(e => e.Desc)
+               .HasColumnName("desc")
+               .HasColumnType("varchar(500)");
+         });
+
          modelBuilder.Entity<PlusOne>(entity =>
          {
             entity.ToTable("plus_one");
@@ -139,6 +163,7 @@ namespace krusing_down_the_aisle_backend.Models
                .HasColumnType("int(11)")
                .IsRequired();
          });
+
          modelBuilder.Entity<WeddingParty>(entity =>
          {
             entity.ToTable("wedding_party");
