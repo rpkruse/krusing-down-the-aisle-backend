@@ -43,17 +43,12 @@ namespace krusing_down_the_aisle_backend.Controllers.Controllers
          if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-         /*var person = await _context.Person
+         Person person = await _context.Person
                                     .Include(f => f.Food)
                                     .Include(p => p.PlusOne)
                                        .ThenInclude(f => f.Food)
-                                    .AsNoTracking().SingleOrDefaultAsync(p => p.Id == id);*/
-        Person person = await _context.Person
-                                    .Include(f => f.Food)
-                                    .Include(p => p.PlusOne)
-                                       .ThenInclude(f => f.Food)
+                                    .Include(pm => pm.PartyMembers)
                                     .AsNoTracking().SingleOrDefaultAsync(p => p.Id == id);
-
         
         if (person == null)
         {
@@ -61,7 +56,7 @@ namespace krusing_down_the_aisle_backend.Controllers.Controllers
         }
 
 
-        person.PartyMembers = await _context.PartyMember.Where(x => x.PersonId == person.Id);
+        person.PartyMembers = await _context.PartyMember.Where(x => x.PersonId == person.Id).Include(f => f.Food).ToListAsync();
 
         return Ok(person);
       }
@@ -87,13 +82,19 @@ namespace krusing_down_the_aisle_backend.Controllers.Controllers
                                     .AsNoTracking()
                                     .FirstOrDefaultAsync(p => p.FirstName.ToUpper().Equals(names[0].ToUpper()) && p.LastName.ToUpper().Equals(names[1].ToUpper()));
 
-         if (person == null)
+         var partyMember = await _context.PartyMember
+                                    .AsNoTracking()
+                                    .FirstOrDefaultAsync(p => p.FirstName.ToUpper().Equals(names[0].ToUpper()) && p.LastName.ToUpper().Equals(names[1].ToUpper()));
+
+         if (person == null && partyMember == null)
          {
             ModelState.AddModelError("Error", string.Format("Unable to find RSVP with name {0} {1}", names[0], names[1]));
             return BadRequest(ModelState);
          }
 
-         return Ok(person);
+         int IdToGet = person != null ? person.Id : partyMember.PersonId;
+
+         return RedirectToAction("GetPerson", IdToGet);
       }
 
       [HttpPut("{id}")]

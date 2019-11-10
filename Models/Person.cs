@@ -20,9 +20,11 @@ namespace krusing_down_the_aisle_backend.Models
       public bool HasAllergy { get; set; }
       public string Allergy { get; set; }
       public bool HasRSVPD { get; set; }
+    
+      public List<PartyMember> PartyMembers { get; set; }
 
       public virtual Food Food { get; set; }
       public virtual PlusOne PlusOne { get; set; }
-      public virtual PartyMember[] PartyMembers { get; set; }
+      //public virtual PartyMember[] PartyMembers { get; set; }
    }
 }
