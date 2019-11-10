@@ -94,6 +94,8 @@ namespace krusing_down_the_aisle_backend.Controllers.Controllers
             //return BadRequest(ModelState);
 
             Person p = new Person(names[0], names[1]);
+
+            p.HasPlusone = await _context.PlusOneNameMap.SingleOrDefaultAsync(x => x.Name.ToLower() == (p.FirstName.ToLower() + " " + p.LastName.ToLower())) != null;
  
             return Ok(p);
          }
