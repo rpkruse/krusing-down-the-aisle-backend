@@ -94,7 +94,12 @@ namespace krusing_down_the_aisle_backend.Models
                .HasColumnType("tinyint(1)")
                .IsRequired();
 
-            entity.HasOne(p => p.PlusOne)
+             entity.Property(e => e.CanAttend)
+                 .HasColumnName("canAttend")
+                 .HasColumnType("tinyint(1)")
+                 .IsRequired();
+
+             entity.HasOne(p => p.PlusOne)
                .WithOne(p => p.Person)
                .HasForeignKey<PlusOne>(p => p.PersonId);
          });

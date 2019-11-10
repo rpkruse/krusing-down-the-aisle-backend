@@ -20,6 +20,7 @@ namespace krusing_down_the_aisle_backend.Models
       public bool HasAllergy { get; set; }
       public string Allergy { get; set; }
       public bool HasRSVPD { get; set; }
+      public bool CanAttend { get; set; }
     
       public List<PartyMember> PartyMembers { get; set; }
 
