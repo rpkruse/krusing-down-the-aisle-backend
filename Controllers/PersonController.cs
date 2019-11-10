@@ -94,7 +94,7 @@ namespace krusing_down_the_aisle_backend.Controllers.Controllers
 
          int IdToGet = person != null ? person.Id : partyMember.PersonId;
 
-         return RedirectToAction("GetPerson", IdToGet);
+         return RedirectToAction("GetPerson", new { id = IdToGet });
       }
 
       [HttpPut("{id}")]
