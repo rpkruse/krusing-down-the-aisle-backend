@@ -43,18 +43,27 @@ namespace krusing_down_the_aisle_backend.Controllers.Controllers
          if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-         var person = await _context.Person
+         /*var person = await _context.Person
+                                    .Include(f => f.Food)
+                                    .Include(p => p.PlusOne)
+                                       .ThenInclude(f => f.Food)
+                                    .AsNoTracking().SingleOrDefaultAsync(p => p.Id == id);*/
+        Person person = await _context.Person
                                     .Include(f => f.Food)
                                     .Include(p => p.PlusOne)
                                        .ThenInclude(f => f.Food)
                                     .AsNoTracking().SingleOrDefaultAsync(p => p.Id == id);
 
-         if (person == null)
-         {
-            return NotFound();
-         }
+        
+        if (person == null)
+        {
+          return NotFound();
+        }
 
-         return Ok(person);
+
+        person.PartyMembers = await _context.PartyMember.Where(x => x.PersonId == person.Id);
+
+        return Ok(person);
       }
 
       [HttpGet("Lookup/")]

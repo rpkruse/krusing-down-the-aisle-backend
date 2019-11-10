@@ -12,6 +12,7 @@ namespace krusing_down_the_aisle_backend.Models
       public virtual DbSet<Person> Person { get; set; }
       public virtual DbSet<Photo> Photo { get; set; }
       public virtual DbSet<PlusOne> PlusOne { get; set; }
+      public virtual DbSet<PartyMember> PartyMember { get; set; }
       public virtual DbSet<WeddingParty> WeddingParty { get; set; }
       public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
@@ -146,6 +147,49 @@ namespace krusing_down_the_aisle_backend.Models
 
             entity.Property(e => e.HasAllergy)
                .HasColumnName("hasAllergy")
+               .HasColumnType("tinyint(1)")
+               .IsRequired();
+
+            entity.Property(e => e.Allergy)
+               .HasColumnName("allergy")
+               .HasColumnType("varchar(50)");
+
+            entity.Property(e => e.FoodId)
+               .HasColumnName("food_id")
+               .HasColumnType("int(11)")
+               .IsRequired();
+
+            entity.Property(e => e.PersonId)
+               .HasColumnName("person_id")
+               .HasColumnType("int(11)")
+               .IsRequired();
+         });
+
+        modelBuilder.Entity<PartyMember>(entity =>
+         {
+            entity.ToTable("party_member");
+
+            entity.HasIndex(e => e.Id)
+               .HasName("id")
+               .IsUnique();
+
+            entity.Property(e => e.Id)
+               .HasColumnName("id")
+               .HasColumnType("int(11)")
+               .IsRequired();
+
+            entity.Property(e => e.FirstName)
+               .HasColumnName("first_name")
+               .HasColumnType("varchar(50)")
+               .IsRequired();
+
+            entity.Property(e => e.LastName)
+               .HasColumnName("last_name")
+               .HasColumnType("varchar(50)")
+               .IsRequired();
+
+            entity.Property(e => e.HasAllergy)
+               .HasColumnName("has_allergy")
                .HasColumnType("tinyint(1)")
                .IsRequired();
 
