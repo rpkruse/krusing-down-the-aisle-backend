@@ -58,6 +58,8 @@ namespace krusing_down_the_aisle_backend.Controllers.Controllers
 
         person.PartyMembers = await _context.PartyMember.Where(x => x.PersonId == person.Id).Include(f => f.Food).ToListAsync();
 
+        person.HasPlusone = await _context.PlusOneNameMap.SingleOrDefaultAsync(x => x.Name.ToLower() == (person.FirstName.ToLower() + " " + person.LastName.ToLower())) != null;
+
         return Ok(person);
       }
 

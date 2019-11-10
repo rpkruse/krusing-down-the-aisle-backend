@@ -14,6 +14,7 @@ namespace krusing_down_the_aisle_backend.Models
       public virtual DbSet<PlusOne> PlusOne { get; set; }
       public virtual DbSet<PartyMember> PartyMember { get; set; }
       public virtual DbSet<WeddingParty> WeddingParty { get; set; }
+      public virtual DbSet<PlusOneNameMap> PlusOneNameMap { get; set; }
       public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
       protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -168,6 +169,26 @@ namespace krusing_down_the_aisle_backend.Models
                .HasColumnName("person_id")
                .HasColumnType("int(11)")
                .IsRequired();
+         });
+
+         modelBuilder.Entity<PlusOneNameMap>(entity =>
+         {
+            entity.ToTable("plus_one_name_map");
+
+            entity.HasIndex(e => e.Id)
+               .HasName("id")
+               .IsUnique();
+
+            entity.Property(e => e.Id)
+               .HasColumnName("id")
+               .HasColumnType("int(11)")
+               .IsRequired();
+
+            entity.Property(e => e.Name)
+               .HasColumnName("name")
+               .HasColumnType("varchar(45)")
+               .IsRequired();
+
          });
 
         modelBuilder.Entity<PartyMember>(entity =>
