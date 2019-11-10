@@ -12,6 +12,14 @@ namespace krusing_down_the_aisle_backend.Models
 
       }
 
+      public Person(string fName, string lName)
+        {
+          this.FirstName = fName;
+          this.LastName = lName;
+          this.HasRSVPD = false;
+          this.PartyMembers = new List<PartyMember> { };
+        }
+
       public int Id { get; set; }
       public string FirstName { get; set; }
       public string LastName { get; set; }

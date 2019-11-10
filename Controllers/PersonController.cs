@@ -90,8 +90,12 @@ namespace krusing_down_the_aisle_backend.Controllers.Controllers
 
          if (person == null && partyMember == null)
          {
-            ModelState.AddModelError("Error", string.Format("Unable to find RSVP with name {0} {1}", names[0], names[1]));
-            return BadRequest(ModelState);
+            //ModelState.AddModelError("Error", string.Format("Unable to find RSVP with name {0} {1}", names[0], names[1]));
+            //return BadRequest(ModelState);
+
+            Person p = new Person(names[0], names[1]);
+ 
+            return Ok(p);
          }
 
          int IdToGet = person != null ? person.Id : partyMember.PersonId;
